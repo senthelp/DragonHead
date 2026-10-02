@@ -6,10 +6,14 @@
   "description": "Client-side cosmetic: shows Wither Skeleton Skulls as Dragon Heads on YOUR screen only. Other players do not see it. Made by PatheticTry.",
   "authors": ["PatheticTry"],
   "environment": "client",
+  "entrypoints": {
+    "main": ["com.pathetictry.dragonskull.DragonSkullMod"]
+  },
   "mixins": ["dragonskull.mixins.json"],
   "depends": {
     "fabricloader": ">=0.18.0",
     "minecraft": ">=1.0.0",
-    "java": ">=25"
+    "java": ">=25",
+    "fabric-api": "*"
   }
 }
