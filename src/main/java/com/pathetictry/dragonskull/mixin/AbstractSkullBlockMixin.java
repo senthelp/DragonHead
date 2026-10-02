@@ -13,7 +13,12 @@ import net.minecraft.world.level.block.SkullBlock;
 public abstract class AbstractSkullBlockMixin {
     @Inject(method = "getType", at = @At("RETURN"), cancellable = true)
     private void dragonskull$swapType(CallbackInfoReturnable<SkullBlock.Type> cir) {
-        if (cir.getReturnValue() == SkullBlock.Types.WITHER_SKELETON && Minecraft.getInstance().isSameThread()) {
+        if (cir.getReturnValue() != SkullBlock.Types.WITHER_SKELETON) return;
+        // During game startup (block registration) the client object doesn't exist yet: do nothing then.
+        Minecraft mc = Minecraft.getInstance();
+        if (mc == null) return;
+        // Only on the client render thread; the integrated server thread keeps the real type.
+        if (mc.isSameThread()) {
             cir.setReturnValue(SkullBlock.Types.DRAGON);
         }
     }
